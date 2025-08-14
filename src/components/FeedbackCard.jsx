@@ -1,5 +1,4 @@
 // src/components/FeedbackCard.jsx
-import React from "react";
 import { urlFor } from "../lib/sanityClient";
 
 export default function FeedbackCard({ feedback }) {

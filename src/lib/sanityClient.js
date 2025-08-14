@@ -22,23 +22,13 @@ export async function fetchDishes() {
     "slug": slug.current,
     description,
     price,
+    isAvailable,
+    mainDish,
     images[]{ asset->{ _id, url } }
   } | order(name asc)`
   return await client.fetch(query)
 }
 
-// Fetch only main dish
-export async function fetchMainDish() {
-  const query = `*[_type == "dish" && mainDish == true][0]{
-    _id,
-    name,
-    "slug": slug.current,
-    description,
-    price,
-    images[]{ asset->{ _id, url } }
-  }`
-  return await client.fetch(query)
-}
 
 // Fetch one dish by slug
 export async function fetchDishBySlug(slug) {
@@ -48,6 +38,7 @@ export async function fetchDishBySlug(slug) {
     "slug": slug.current,
     description,
     price,
+    mainDish,
     images[]{ asset->{ _id, url } }
   }`
   return await client.fetch(query, { slug })
