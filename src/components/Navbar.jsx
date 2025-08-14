@@ -2,30 +2,18 @@ import { Link } from 'react-router-dom';
 
 export default function Navbar() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div className="container">
-        <Link className="navbar-brand fw-bold" to="/">Alhana</Link>
-        
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
+    <>
+      <h1 className='text-center my-3 mb-0' style={{ fontSize: "40px" }}>Al Hana Kitchen</h1>
+      <p className='text-center text-muted'>=Flavors of home.=</p>
 
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto">
-            <li className="nav-item">
-              <Link className="nav-link" to="/">Home</Link>
-            </li>
-            <li className="nav-item">
-              <Link className="nav-link" to="/dish">Dish</Link>
-            </li>
-          </ul>
+      <nav className="navbar navbar-expand-md border-dark border border-end-0 border-start-0">
+        <div className="d-flex mx-auto text-center px-5">
+          <Link className="nav-link" to="/">Home</Link>
+          <Link className="nav-link mx-4 mx-md-5" to={{ pathname: "/", hash: "#dishes" }}>Dishes</Link>
+          <Link className="nav-link" to={{ pathname: "/", hash: "#about" }}>About Us</Link>
+          <Link className="nav-link ms-4 ms-md-5" to="/contact">Contact</Link>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </>
   );
 }
