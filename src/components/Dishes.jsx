@@ -40,11 +40,11 @@ export default function Dishes() {
                 )}
                 <div className="card-body">
                   <h5 className="card-title">{dish.name}</h5>
-                  <p className="card-text">{dish.description}</p>
+                  {/* <p className="card-text">{dish.description}</p> */}
                   <p className="fw-bold">{dish.price} €</p>
                   <Link
                     to={dish.slug ? `/dish/${dish.slug}` : "#"}
-                    className="btn btn-primary"
+                    className="btn btn-primary w-100"
                   >
                     View Details
                   </Link>

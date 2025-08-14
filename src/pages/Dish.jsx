@@ -1,15 +1,21 @@
 // src/pages/Dish.jsx
 import { useEffect, useState } from "react";
-import { fetchDishBySlug, urlFor } from "../lib/sanityClient";
+import { fetchDishBySlug, fetchFeedbacksByDishSlug, urlFor } from "../lib/sanityClient";
 import { useParams } from "react-router-dom";
+import FeedbackCard from "../components/FeedbackCard";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function Dish() {
   const { slug } = useParams();
   const [dish, setDish] = useState(null);
+  const [feedbacks, setFeedbacks] = useState([]);
 
   useEffect(() => {
+    // Fetch the specific dish by slug
     fetchDishBySlug(slug).then(setDish);
+
+    // Fetch feedbacks only for this dish
+    fetchFeedbacksByDishSlug(slug).then(setFeedbacks);
   }, [slug]);
 
   if (!dish) return <p>Loading dish...</p>;
@@ -21,7 +27,7 @@ export default function Dish() {
       <p className="fw-bold">{dish.price} €</p>
 
       {dish.images?.length > 0 && (
-        <div id="dishCarousel" className="carousel slide" data-bs-ride="carousel">
+        <div id="dishCarousel" className="carousel slide mb-5" data-bs-ride="carousel">
           <div className="carousel-inner">
             {dish.images.map((img, index) => (
               <div
@@ -59,6 +65,20 @@ export default function Dish() {
             </>
           )}
         </div>
+      )}
+
+      {/* Dish Feedbacks */}
+      {feedbacks.length > 0 && (
+        <section className="my-5">
+          <h3 className="mb-4">Customer Reviews</h3>
+          <div className="row g-4">
+            {feedbacks.map((fb) => (
+              <div key={fb._id} className="col-12 col-md-6 col-lg-4">
+                <FeedbackCard feedback={fb} />
+              </div>
+            ))}
+          </div>
+        </section>
       )}
     </section>
   );
