@@ -17,6 +17,7 @@ export async function fetchDishes() {
   const query = `*[_type == "dish"]{
     _id,
     name,
+    "slug": slug.current,
     description,
     price,
     images[]{ asset->{ _id, url } }
@@ -30,6 +31,7 @@ export async function fetchMainDish() {
   const query = `*[_type == "dish" && mainDish == true][0]{
     _id,
     name,
+    "slug": slug.current,
     description,
     price,
     images[]{ asset->{ _id, url } }
@@ -43,6 +45,7 @@ export async function fetchDishBySlug(slug) {
   const query = `*[_type == "dish" && slug.current == $slug][0]{
     _id,
     name,
+    "slug": slug.current,
     description,
     price,
     images[]{ asset->{ _id, url } }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { fetchDishes, urlFor } from "../lib/sanityClient";
 
 export default function Dishes() {
@@ -7,73 +8,51 @@ export default function Dishes() {
 
   useEffect(() => {
     fetchDishes()
-      .then((data) => setDishes(data))
+      .then((data) => {
+        // Filter out main dish if that field exists
+        const otherDishes = data.filter((dish) => !dish.mainDish);
+        setDishes(otherDishes);
+      })
       .finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <p className="text-center my-5">Loading dishes...</p>;
-  if (!dishes.length) return <p className="text-center my-5">No dishes found.</p>;
+  if (loading) return <p>Loading dishes...</p>;
+  if (!dishes.length) return <p>No dishes found.</p>;
 
   return (
     <section className="container my-5">
-      <h2 className="text-center mb-4">Other Dishes</h2>
+      <h2 className="mb-4">Other Dishes</h2>
       <div className="row g-4">
-        {dishes.map((dish) => (
-          <div key={dish._id} className="col-md-4">
-            <div className="card shadow-sm border-0 h-100">
-              
-              {/* Dish Carousel */}
-              {dish.images?.length > 0 && (
-                <div id={`dishCarousel-${dish._id}`} className="carousel slide" data-bs-ride="carousel">
-                  <div className="carousel-inner">
-                    {dish.images.map((img, idx) => (
-                      <div
-                        key={idx}
-                        className={`carousel-item ${idx === 0 ? "active" : ""}`}
-                      >
-                        <img
-                          src={urlFor(img.asset).width(500).url()}
-                          className="d-block w-100"
-                          alt={dish.name}
-                          style={{ height: "250px", objectFit: "cover" }}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                  {dish.images.length > 1 && (
-                    <>
-                      <button
-                        className="carousel-control-prev"
-                        type="button"
-                        data-bs-target={`#dishCarousel-${dish._id}`}
-                        data-bs-slide="prev"
-                      >
-                        <span className="carousel-control-prev-icon"></span>
-                        <span className="visually-hidden">Previous</span>
-                      </button>
-                      <button
-                        className="carousel-control-next"
-                        type="button"
-                        data-bs-target={`#dishCarousel-${dish._id}`}
-                        data-bs-slide="next"
-                      >
-                        <span className="carousel-control-next-icon"></span>
-                        <span className="visually-hidden">Next</span>
-                      </button>
-                    </>
-                  )}
-                </div>
-              )}
+        {dishes.map((dish) => {
+          const firstImage = dish.images?.[0]
+            ? urlFor(dish.images[0]).width(500).url()
+            : null;
 
-              {/* Dish Details */}
-              <div className="card-body text-center">
-                <h5 className="card-title">{dish.name}</h5>
-                <p className="card-text">{dish.description}</p>
-                <h6 className="text-primary">{dish.price} €</h6>
+          return (
+            <div className="col-6 col-md-4" key={dish._id}>
+              <div className="card h-100">
+                {firstImage && (
+                  <img
+                    src={firstImage}
+                    alt={dish.name}
+                    className="card-img-top"
+                  />
+                )}
+                <div className="card-body">
+                  <h5 className="card-title">{dish.name}</h5>
+                  <p className="card-text">{dish.description}</p>
+                  <p className="fw-bold">{dish.price} €</p>
+                  <Link
+                    to={dish.slug ? `/dish/${dish.slug}` : "#"}
+                    className="btn btn-primary"
+                  >
+                    View Details
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

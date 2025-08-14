@@ -1,63 +1,48 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { fetchMainDish, urlFor } from "../lib/sanityClient";
 
 export default function MainDish() {
   const [mainDish, setMainDish] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchMainDish().then(setMainDish);
+    fetchMainDish()
+      .then((data) => {
+        setMainDish(data);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
-  if (!mainDish) return <p className="text-center my-5">Loading main dish...</p>;
+  if (loading) return <p>Loading main dish...</p>;
+  if (!mainDish) return <p>No main dish found.</p>;
+
+  const firstImage = mainDish.images?.[0]
+    ? urlFor(mainDish.images[0]).width(600).url()
+    : null;
 
   return (
-    <section className="container my-5">
-      <h1 className="text-center mb-4">Our Main Dish</h1>
-
-      {/* Bootstrap Carousel */}
-      {mainDish.images?.length > 0 && (
-        <div id="mainDishCarousel" className="carousel slide" data-bs-ride="carousel">
-          <div className="carousel-inner rounded shadow">
-            {mainDish.images.map((img, idx) => (
-              <div
-                key={idx}
-                className={`carousel-item ${idx === 0 ? "active" : ""}`}
-              >
-                <img
-                  src={urlFor(img.asset).width(900).url()}
-                  className="d-block w-100"
-                  alt={mainDish.name}
-                  style={{ maxHeight: "500px", objectFit: "cover" }}
-                />
-              </div>
-            ))}
-          </div>
-          <button
-            className="carousel-control-prev"
-            type="button"
-            data-bs-target="#mainDishCarousel"
-            data-bs-slide="prev"
+    <section className="container text-center my-5">
+      <h2 className="mb-4">Main Dish</h2>
+      <div className="card mb-4">
+        {firstImage && (
+          <img
+            src={firstImage}
+            alt={mainDish.name}
+            className="card-img-top"
+          />
+        )}
+        <div className="card-body">
+          <h3 className="card-title">{mainDish.name}</h3>
+          <p className="card-text">{mainDish.description}</p>
+          <p className="fw-bold">{mainDish.price} €</p>
+          <Link
+            to={mainDish.slug ? `/dish/${mainDish.slug}` : "#"}
+            className="btn btn-primary"
           >
-            <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span className="visually-hidden">Previous</span>
-          </button>
-          <button
-            className="carousel-control-next"
-            type="button"
-            data-bs-target="#mainDishCarousel"
-            data-bs-slide="next"
-          >
-            <span className="carousel-control-next-icon" aria-hidden="true"></span>
-            <span className="visually-hidden">Next</span>
-          </button>
+            View Details
+          </Link>
         </div>
-      )}
-
-      {/* Dish Info */}
-      <div className="mt-4 text-center">
-        <h2>{mainDish.name}</h2>
-        <p className="lead">{mainDish.description}</p>
-        <h4 className="text-primary">{mainDish.price} €</h4>
       </div>
     </section>
   );

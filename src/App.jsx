@@ -14,7 +14,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/dish/:id" element={<Dish />} />
+          <Route path="/dish/:slug" element={<Dish />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </main>
@@ -23,4 +23,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
