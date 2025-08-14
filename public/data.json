@@ -1,0 +1,46 @@
+
+[
+  {
+    "_createdAt": "2025-08-12T20:45:39Z",
+    "_id": "909b7e66-f546-4e34-85d0-8281c9ec9983",
+    "_rev": "2zTDNpzueB8kPhiwVHGzDR",
+    "_system": {
+      "base": {
+        "id": "909b7e66-f546-4e34-85d0-8281c9ec9983",
+        "rev": "fCUvcJx4pgMF5LxC2nAlee"
+      }
+    },
+    "_type": "dish",
+    "_updatedAt": "2025-08-12T20:52:40Z",
+    "description": "Slices of marinated beef or chicken, grilled on a vertical rotisserie, served with garlic sauce, pickles, and fries.",
+    "images": [
+      {
+        "_key": "fb51b66afa88",
+        "_type": "image",
+        "asset": {
+          "_ref": "image-68f9a4562c7182d2ccfc0df8f2048995f4636e2b-275x183-jpg",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "2650d690ab66",
+        "_type": "image",
+        "asset": {
+          "_ref": "image-84b1adc0ca2ec9afab2453ecbe900bd95d51ed33-800x550-jpg",
+          "_type": "reference"
+        }
+      },
+      {
+        "_key": "bb59b1190af5",
+        "_type": "image",
+        "asset": {
+          "_ref": "image-fc6832104cb4fbab41bd7ec6ceb5b65f8a6cd293-225x225-jpg",
+          "_type": "reference"
+        }
+      }
+    ],
+    "isAvailable": true,
+    "name": "Shawarma Plate (Beef or Chicken)",
+    "price": 10
+  }
+]
