@@ -3,13 +3,12 @@ import { urlFor } from "../lib/sanityClient";
 
 export default function TeamMember({ member }) {
   return (
-    <div className="card shadow-sm h-100 text-center">
+    <div className="card rounded-0 border-0 h-100 text-center">
       {member.photo && (
         <img
-          src={urlFor(member.photo).width(300).height(300).url()}
+          src={urlFor(member.photo).url()}
           alt={member.name}
-          className="card-img-top img-fluid"
-          style={{ objectFit: "cover", height: "300px" }}
+          style={{ objectFit: "contain" }}
         />
       )}
       <div className="card-body">

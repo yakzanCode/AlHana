@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 export default function Navbar() {
   return (
     <>
-      <h1 className='text-center my-3 mb-0' style={{ fontSize: "40px" }}>Al Hana Kitchen</h1>
-      <p className='text-center text-muted'>=Flavors of home.=</p>
+      <Link className="nav-link" to="/">
+        <h1 className='text-center my-3 mb-0' style={{ fontSize: "40px" }}>Al Hana Kitchen</h1>
+        <p className='text-center text-muted'>=flavors of home=</p>
+      </Link>
 
       <nav className="navbar navbar-expand-md border-dark border border-end-0 border-start-0">
         <div className="d-flex mx-auto text-center px-5">
