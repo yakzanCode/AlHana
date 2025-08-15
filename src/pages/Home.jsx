@@ -6,6 +6,7 @@ import TeamMember from "../components/TeamMember";
 import FeedbackCard from "../components/FeedbackCard";
 
 import { fetchTeamMembers, fetchFeedbacks, fetchDishes, urlFor } from "../lib/sanityClient";
+import Carousel from "../components/Carousel";
 
 export default function Home() {
   const location = useLocation();
@@ -90,35 +91,34 @@ export default function Home() {
       </section>
 
       {/*********   ABOUT US   ********/}
-      <section className="py-5 bg-white" id="about">
+      <section className="py-5 bg-light" id="about">
         <div className="container">
           <h2 className="text-center mb-4 fw-bold">Our Team</h2>
+
           {team.length > 0 ? (
-            <div className="row g-4">
+            <Carousel>
               {team.map((member) => (
-                <div key={member._id} className="col-12 col-sm-6 col-lg-4">
-                  <TeamMember member={member} />
-                </div>
+                <TeamMember key={member._id} member={member} />
               ))}
-            </div>
+            </Carousel>
           ) : (
             <p className="text-center">Team members are coming soon!</p>
           )}
         </div>
       </section>
 
+
       {/*********   FEEDBACKS   ********/}
-      <section className="py-5 bg-light">
-        <div className="container">
+      <section className="py-5">
+        <div className="container-fluid">
           <h2 className="text-center mb-4">What Our Customers Say</h2>
+
           {feedbacks.length > 0 ? (
-            <div className="row g-4">
+            <Carousel>
               {feedbacks.map((fb) => (
-                <div key={fb._id} className="col-12 col-md-6 col-lg-4">
-                  <FeedbackCard feedback={fb} />
-                </div>
+                <FeedbackCard key={fb._id} feedback={fb} />
               ))}
-            </div>
+            </Carousel>
           ) : (
             <p className="text-center">No feedbacks yet. Be the first to leave one!</p>
           )}

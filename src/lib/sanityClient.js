@@ -96,11 +96,9 @@ export async function fetchTeamMembers() {
     position,
     photo,
     description,
-    socialLinks {
-      facebook,
-      instagram,
-      whatsapp
-    }
+    facebook,
+    instagram,
+    whatsapp
   } | order(name asc)`
   return await client.fetch(query)
 }
